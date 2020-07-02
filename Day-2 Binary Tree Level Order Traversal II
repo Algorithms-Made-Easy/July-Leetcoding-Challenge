@@ -1,0 +1,70 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> result=new ArrayList<>();
+        if(root==null) return result;
+        Queue<TreeNode> st=new LinkedList<>();
+        
+        st.add(root);
+        int count=1;
+        while(!st.isEmpty()){
+            
+            List<Integer> l=new ArrayList<>();
+            int num=0;
+            
+            while(count-->0){
+                TreeNode t=st.remove();
+                if(t.left!=null){
+                    st.add(t.left);
+                    num++;
+                }
+                if(t.right!=null){
+                    st.add(t.right);
+                    num++;
+                }
+                l.add(t.val);
+            }
+            
+            count=num;
+            result.add(0,l);
+        }
+        
+        return result;
+    }
+}
+
+class Solution {
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> result=new ArrayList<>();
+        if(root==null) return result;
+        
+        dfs(root,0,result);
+        return result;
+    }
+    
+    void dfs(TreeNode root, int depth,List<List<Integer>> result){
+        if(root==null) return;
+        if(result.size()==depth){
+            result.add(0,new ArrayList<>());
+        }
+        
+        result.get(result.size()-depth-1).add(root.val);
+        dfs(root.left,depth+1,result);
+        dfs(root.right,depth+1,result);
+        
+    }
+}
