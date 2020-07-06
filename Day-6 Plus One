@@ -1,0 +1,48 @@
+class Solution {
+    public int[] plusOne(int[] digits) {
+        int sum=0;
+        int carry=1;
+        
+        for(int i=digits.length-1;i>=0;i--){
+            sum=digits[i]+carry;
+            carry=sum/10;
+            digits[i]=sum%10;
+        }
+        
+        if(carry>0){
+            int[] newAr=new int[digits.length+1];
+            for(int i=0;i<digits.length;i++){
+                newAr[i+1]=digits[i];
+            }
+            newAr[0]=carry;
+            return newAr;
+        }
+        return digits;
+    }
+}
+
+
+class Solution {
+  public int[] plusOne(int[] digits) {
+    int n = digits.length;
+
+    // move along the input array starting from the end
+    for (int idx = n - 1; idx >= 0; --idx) {
+      // set all the nines at the end of array to zeros
+      if (digits[idx] == 9) {
+        digits[idx] = 0;
+      }
+      // here we have the rightmost not-nine
+      else {
+        // increase this rightmost not-nine by 1 
+        digits[idx]++;
+        // and the job is done
+        return digits;
+      }
+    }
+    // we're here because all the digits are nines
+    digits = new int[n + 1];
+    digits[0] = 1;
+    return digits;
+  }
+}
