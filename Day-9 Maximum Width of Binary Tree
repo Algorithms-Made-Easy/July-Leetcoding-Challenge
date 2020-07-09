@@ -1,0 +1,54 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public int widthOfBinaryTree(TreeNode root) {
+        if (root == null)
+            return 0;
+        LinkedList<Pair<TreeNode, Integer>> queue = new LinkedList<>();
+        Integer maxWidth = 0;
+
+        queue.addLast(new Pair<>(root, 0));
+        while (queue.size() > 0) {
+            Pair<TreeNode, Integer> head = queue.getFirst();
+            Integer currLevelSize = queue.size();
+            Pair<TreeNode, Integer> elem = null;
+            for (int i = 0; i < currLevelSize; ++i) {
+                elem = queue.removeFirst();
+                TreeNode node = elem.getKey();
+                if (node.left != null)
+                    queue.addLast(new Pair<>(node.left, 2 * elem.getValue()));
+                if (node.right != null)
+                    queue.addLast(new Pair<>(node.right, 2 * elem.getValue() + 1));
+            }
+            maxWidth = Math.max(maxWidth, elem.getValue() - head.getValue() + 1);
+        }
+
+        return maxWidth;
+    }
+}
+
+class Solution {
+    int max=1;
+    public int widthOfBinaryTree(TreeNode root) {
+        List<Integer> start=new ArrayList<>();
+        helper(root,0,1,start);
+        return max;    
+    }
+    
+    void helper(TreeNode node,int level,int index,List<Integer> start){
+        if(node==null) return;
+        if(level==start.size()) start.add(index);
+        max=Math.max(max,index+1-start.get(level));
+        helper(node.left,level+1,2*index,start);
+        helper(node.right,level+1,2*index+1,start);
+    }
+    
+    
+}
