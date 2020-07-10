@@ -1,0 +1,71 @@
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node prev;
+    public Node next;
+    public Node child;
+
+    public Node() {}
+
+    public Node(int _val,Node _prev,Node _next,Node _child) {
+        val = _val;
+        prev = _prev;
+        next = _next;
+        child = _child;
+    }
+};
+*/
+class Solution {
+    public Node flatten(Node head) {
+        if(head==null) return head;
+        Node temp=head;
+        while(temp!=null){
+            
+            if(temp.child!=null){
+                Node next=temp.next;
+                Node child=flatten(temp.child);
+                temp.child=null;
+                temp.next=child;
+                child.prev=temp;
+                while(child.next!=null){
+                    child=child.next;
+                }
+                child.next=next;
+                if(next!=null)
+                next.prev=child;
+                temp=child;
+            }
+            
+            temp=temp.next;
+        } 
+        return head;    
+    }    
+}
+
+class Solution {
+  public Node flatten(Node head) {
+    if (head == null) return head;
+
+    Node pseudoHead = new Node(0, null, head, null);
+    Node curr, prev = pseudoHead;
+
+    Deque<Node> stack = new ArrayDeque<>();
+    stack.push(head);
+
+    while (!stack.isEmpty()) {
+      curr = stack.pop();
+      prev.next = curr;
+      curr.prev = prev;
+
+      if (curr.next != null) stack.push(curr.next);
+      if (curr.child != null) {
+        stack.push(curr.child);
+        curr.child = null;
+      }
+      prev = curr;
+    }
+    pseudoHead.next.prev = null;
+    return pseudoHead.next;
+  }
+}
