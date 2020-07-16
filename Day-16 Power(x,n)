@@ -1,0 +1,55 @@
+class Solution {
+    public double myPow(double x, int n) {
+        long N = n;
+        if (N < 0) {
+            x = 1 / x;
+            N = -N;
+        }
+        double ans = 1;
+        for (long i = 0; i < N; i++)
+            ans = ans * x;
+        return ans;
+    }
+};
+
+
+
+class Solution {
+    public double myPow(double x, long n) {
+        if(n < 0){
+            x = 1/x;
+            n = -n;
+        }
+        if(n == 0)
+            return 1;
+        if(n == 1)
+            return x;
+        double m = myPow(x,(int)(n/2));
+        m *= m;
+        if(n % 2 == 1){
+            m = m * x;
+        }
+        return m;
+    }
+}
+
+
+class Solution {
+    public double myPow(double x, int n) {
+        long N = n;
+        if (N < 0) {
+            x = 1 / x;
+            N = -N;
+        }
+        double result = 1;
+        double currentResult = x;
+        for (long i = N; i > 0; i /= 2) {
+            if ((i % 2) == 1) {
+                result = result * currentResult;
+            }
+            currentResult = currentResult * currentResult;
+        }
+        return result;
+    }
+}
+
