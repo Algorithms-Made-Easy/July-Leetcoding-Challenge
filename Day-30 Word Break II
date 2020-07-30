@@ -1,0 +1,32 @@
+class Solution {
+    List<String> wordDict=null;
+    String s=null;
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        this.wordDict = wordDict;
+        this.s = s;
+        int length = s.length();
+        List<String>[] result = new ArrayList[length];
+        helper(0, length, result);
+        return result[0];
+    }
+    List<String> helper(int position, int length, List<String>[] result){
+        if(result[position] != null){
+            return result[position];
+        }
+        List<String> posStr = new ArrayList<>();
+        for(String w:wordDict){
+            if(s.startsWith(w,position)){
+                if(position + w.length() == length){
+                    posStr.add(w);
+                    continue;
+                }
+                List<String> temp = helper(position + w.length(), length, result);
+                for(String r : temp){
+                    posStr.add(w + " " + r);
+                }
+            }
+        }
+        result[position]=posStr;
+        return posStr;
+    }
+}
